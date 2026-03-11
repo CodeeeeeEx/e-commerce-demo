@@ -1,4 +1,4 @@
-// src/data/products.js
+// 数据库
 const products = [
   {
     id: 1,

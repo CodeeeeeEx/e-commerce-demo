@@ -1,0 +1,117 @@
+/* src/pages/Home.css */
+
+/* 容器：全屏 */
+.home-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* 全屏高度 */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 背景图：全屏、模糊、固定 */
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../public/jiangnan.jpg'); /* 用你喜欢的商品图 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(3px) brightness(0.9); /* 模糊 + 变暗 */
+  animation: zoomIn 20s infinite alternate; /* 缓慢缩放动画 */
+}
+
+/* 遮罩层：半透明黑色 */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* 黑色，60%透明度 */
+  z-index: 1;
+}
+
+/* 内容区域：在遮罩上层 */
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+
+/* 内容显示时的动画 */
+.content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 背景图缓慢缩放动画 */
+@keyframes zoomIn {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+/* 预览小图样式 */
+.preview-images {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.preview-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.preview-item:hover {
+  transform: translateY(-5px);
+}
+
+.preview-item img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.preview-item img:hover {
+  border-color: white;
+  transform: scale(1.1);
+}
+
+.preview-item span {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .preview-images {
+    gap: 1rem;
+  }
+  
+  .preview-item img {
+    width: 60px;
+    height: 60px;
+  }
+}

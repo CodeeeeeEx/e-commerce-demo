@@ -2,7 +2,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // 引入Bootstrap样式
 
-function ProductCard({ product }) { 
+function ProductCard({ product, onAddToCart }) { 
   return (
     // Bootstrap的卡片组件：card + shadow（阴影）
     <div className="card shadow-sm mb-4">
@@ -25,7 +25,12 @@ function ProductCard({ product }) {
         
         {/* 购买按钮：Bootstrap的btn + btn-primary（蓝色） 
             btn btn-primary：Bootstrap的蓝色按钮，点击后有反馈。 */}
-        <button className="btn btn-primary">加入购物车</button>
+        <button 
+          className="btn btn-primary"
+          onClick={() => onAddToCart(product)} 
+        >
+          加入购物车
+        </button>
       </div>
     </div>
   );
