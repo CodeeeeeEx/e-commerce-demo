@@ -1,36 +1,69 @@
 // App.js
-import { useState } from "react";
+import { useState, useEffect } from "react";  // ✅ 添加 useEffect
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from './components/Header';
-import Home from './pages/Home';
 import Products from "./pages/Products";
 import Cart from './pages/Cart';
 
 function App() { 
-  const [cart, setCart] = useState([]); // 购物车状态
+  // 初始化购物车 - 从 LocalStorage 读取
+  const [cart, setCart] = useState(() => {
+    try {
+      const savedCart = localStorage.getItem('ecommerce-cart');
+      if (savedCart) {
+        return JSON.parse(savedCart);
+      }
+    } catch (error) {
+      console.error("读取购物车数据失败:", error);
+    }
+    return []; // 默认空数组
+  });
 
-  const addToCart = (product) => { // 加购函数
-    setCart([...cart, product]);
-    console.log("商品已加入购物车:", product.name); // 调试用
+  // 每次购物车变化时，自动保存到 LocalStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('ecommerce-cart', JSON.stringify(cart));
+    } catch (error) {
+      console.error('保存购物车数据失败:', error);
+    }
+  }, [cart]);
+
+  // 添加商品到购物车
+  const addToCart = (product) => { 
+    setCart(prevCart => {
+      const exists = prevCart.find(item => item.id === product.id);
+      if (exists) {
+        alert(`${product.name}已在购物车中`);
+        return prevCart;
+      }
+      return [...prevCart, product];
+    });
+  };
+
+  // 从购物车移除商品
+  const removeFromCart = (id) => {
+    setCart(prevCart => prevCart.filter(item => item.id !== id));
   };
 
   return (
     <Router>
-      {/* Header 放在 Routes 外面 → 全局显示 */}
       <Header cartCount={cart.length} />
-
       <main className="container py-4">
         <Routes>
-          <Route path="/" element={<Home />} />
-          
-          {/* 首页显示 Products 页面 */}
+          {/* 首页和商品页都显示商品列表 */}
           <Route path="/" element={<Products addToCart={addToCart} />} />
-
-          {/* 商品页（其实和首页一样，但路由不同） */}
-          <Route path="products" element={<Products addToCart={addToCart} />} />
-
-          {/* 购物车页 */}
-          <Route path="/cart" element={<Cart cart={cart} />} />
+          <Route path="/products" element={<Products addToCart={addToCart} />} />
+          
+          {/* 购物车页面 */}
+          <Route 
+            path="/cart" 
+            element={
+              <Cart 
+                cart={cart}
+                removeFromCart={removeFromCart}
+              />
+            }
+          />
         </Routes>
       </main>
     </Router>
