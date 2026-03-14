@@ -1,39 +1,50 @@
+// src/components/Header.jsx
 import React from 'react';
-import { Link } from 'react-router-dom'; // 导入Link组件，路由切换功能
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function Header({ cartCount }) {
   return (
-    // Bootstrap的导航栏组件：navbar + navbar-expand-lg（大屏幕展开）
-    <nav className="navbar navbar-expand-lg navbar-dark bg-black"> {/* navbar navbar-expand-lg：Bootstrap的导航栏，大屏幕（lg）时横向展开，小屏幕折叠；navbar-dark bg-black：黑色背景 + 白色文字 */}
-       {/* 导航栏内容容器 */}
-       <div className="container"> {/* container：限制内容宽度，居中显示 */}
-        {/* Logo区域：品牌名 */}
-        <Link className="navbar-brand" to="/"> {/* 修改：href="#" → to="/" */}
-          电商Demo
+    // 修改点：navbar-light bg-white (白底黑字) + shadow-sm (轻微阴影)
+    <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+      <div className="container">
+        {/* Logo：使用主色字体，加粗 */}
+        <Link className="navbar-brand fw-bold" to="/" style={{ color: '#0F766E', fontSize: '1.5rem' }}>
+          🌿 嘉兴电商
         </Link>
 
-        {/* 右侧菜单：首页、商品、购物车 */}
+        <button 
+          className="navbar-toggler" 
+          type="button" 
+          data-bs-toggle="collapse" 
+          data-bs-target="#navbarNav"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto"> {/* ms-auto：右对齐 */}
-           <li className="nav-item">
-            <Link className="nav-link" to="/">首页</Link>
-           </li>
-           <li className="nav-item">
-             <Link className="nav-link" to="/products">商品</Link>
-           </li>
-           <li className="nav-item">
-             <Link className="nav-link" to="/cart">
-             购物车
-             {cartCount > 0 &&  ( //如果有商品才显示数字
-              <span className="badge bg-danger ms-1">{cartCount}</span>
-              // badge bg-danger：Bootstrap 红色徽章; ms-1：左边距1单位（让数字和文字有间距）
-              )}
-             </Link>
-           </li>
+          <ul className="navbar-nav ms-auto align-items-center">
+            <li className="nav-item mx-2">
+              <Link className="nav-link" to="/" style={{ fontWeight: '500', color: '#4B5563' }}>首页</Link>
+            </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link" to="/products" style={{ fontWeight: '500', color: '#4B5563' }}>商品</Link>
+            </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link position-relative" to="/cart" style={{ fontWeight: '500', color: '#4B5563' }}>
+                购物车
+                {cartCount > 0 && (
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill" 
+                        style={{ backgroundColor: '#F59E0B', color: '#fff', fontSize: '0.75rem' }}>
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
+            </li>
           </ul>
         </div>
-       </div>
+      </div>
     </nav>
   );
 }

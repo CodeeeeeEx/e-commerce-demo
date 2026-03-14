@@ -1,117 +1,179 @@
-/* src/pages/Home.css */
+/* Home.css */
 
-/* 容器：全屏 */
+/* 整个页面：浅灰背景 + 最大宽度限制 */
 .home-container {
-  position: relative;
-  width: 100%;
-  height: 100vh; /* 全屏高度 */
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background-color: #f8f9fa;
+  min-height: 100vh;
 }
 
-/* 背景图：全屏、模糊、固定 */
-.background-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('../../public/jiangnan.jpg'); /* 用你喜欢的商品图 */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: blur(3px) brightness(0.9); /* 模糊 + 变暗 */
-  animation: zoomIn 20s infinite alternate; /* 缓慢缩放动画 */
-}
-
-/* 遮罩层：半透明黑色 */
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* 黑色，60%透明度 */
-  z-index: 1;
-}
-
-/* 内容区域：在遮罩上层 */
-.content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
+/* 英雄区：缩小高度，增加内边距，调整字体 */
+.hero-section {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
   color: white;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease-out;
+  text-align: center;
+  padding: 4rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin-bottom: 3rem;
 }
 
-/* 内容显示时的动画 */
-.content.visible {
-  opacity: 1;
-  transform: translateY(0);
+.hero-section h1 {
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
-/* 背景图缓慢缩放动画 */
-@keyframes zoomIn {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.1);
-  }
+.hero-section p {
+  font-size: 1.2rem;
+  opacity: 0.95;
+  margin-bottom: 2rem;
+  font-weight: 300;
 }
 
-/* 预览小图样式 */
-.preview-images {
-  display: flex;
-  justify-content: center;
+.btn-shop {
+  display: inline-block;
+  background: white;                    /* 白底 */
+  color: #059669;                       /* 绿字 → 和背景呼应 */
+  padding: 1rem 2.5rem;
+  border-radius: 50px;                  /* 圆角胶囊形 */
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* 平滑过渡 */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);         /* 轻微阴影 */
+  border: 2px solid transparent;        /* 预留边框位置，避免 hover 时抖动 */
+  letter-spacing: 0.5px;                /* 字间距微调，更精致 */
+}
+
+.btn-shop:hover {
+  background: #059669;                  /* 悬停变绿底 */
+  color: white;                         /* 文字变白 */
+  transform: translateY(-3px);          /* 向上浮起 3px */
+  box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);     /* 绿色光晕阴影 */
+  border-color: #059669;                /* 边框也变绿，强化轮廓 */
+}
+
+/* 热门推荐区：网格布局 */
+.featured-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.featured-section h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+  font-weight: 700;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
-  margin-top: 3rem;
+  padding: 0 1rem;
 }
 
-.preview-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
+.featured-item {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease;
 }
 
-.preview-item:hover {
+.featured-item:hover {
   transform: translateY(-5px);
 }
 
-.preview-item img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
+.featured-item .emoji {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
 }
 
-.preview-item img:hover {
-  border-color: white;
-  transform: scale(1.1);
+.featured-item h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: #333;
 }
 
-.preview-item span {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.9rem;
-  font-weight: 500;
+.featured-item p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
-/* 响应式调整 */
+/* 优势说明区：三列布局 */
+.benefits-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+  margin-top: 3rem;
+}
+
+.benefit-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.benefit-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 700;
+}
+
+.benefit-card p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* 手机端适配 */
 @media (max-width: 768px) {
-  .preview-images {
-    gap: 1rem;
+  .home-container {
+    padding: 1rem;
   }
-  
-  .preview-item img {
-    width: 60px;
-    height: 60px;
+
+  .hero-section {
+    padding: 3rem 1.5rem;
+    border-radius: 16px;
+  }
+
+  .hero-section h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-shop {
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
+  }
+
+  .featured-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .featured-grid,
+  .benefits-section {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .featured-item,
+  .benefit-card {
+    padding: 1.5rem;
   }
 }

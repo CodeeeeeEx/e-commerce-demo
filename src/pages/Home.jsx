@@ -1,55 +1,56 @@
-// src/pages/Home.jsx
-import React, { useEffect, useState } from 'react';
+// Home.jsx
 import { Link } from 'react-router-dom';
-import './Home.css'; // 创建这个CSS文件
+import './Home.css';
 
 function Home() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  // 页面加载后触发动画
-  useEffect(() => {
-    setTimeout(() => setIsVisible(true), 100);
-  }, []);
-
   return (
     <div className="home-container">
-      {/* 1. 全屏背景图（用你已有的商品图） */}
-      <div className="background-image"></div>
-      
-      {/* 2. 黑色遮罩层（半透明） */}
-      <div className="overlay"></div>
-      
-      {/* 3. 内容区域（居中显示） */}
-      <div className={`content ${isVisible ? 'visible' : ''}`}>
-        <h1 className="display-3 fw-bold mb-4 text-white">
-          欢迎来到嘉兴电商
-        </h1>
-        
-        <p className="lead mb-5 text-light opacity-75">
-          江南好物，触手可及
-        </p>
-        
-        {/* 探索按钮 */}
-        <Link to="/products" className="btn btn-primary btn-lg px-5 py-3">
-          探索商品 →
+      {/* 英雄区 */}
+      <section className="hero-section">
+        <h1>欢迎来到嘉兴电商</h1>
+        <p>精选江南好物，品味嘉兴文化</p>
+        <Link to="/products" className="btn-shop">
+          查看热门商品 →
         </Link>
-        
-        {/* 可选的商品预览（小图） */}
-        <div className="preview-images mt-5">
-          <div className="preview-item">
-            <img src="/shirt.jpg" alt="丝绸衬衫" />
-            <span>丝绸</span>
+      </section>
+
+      {/* 热门推荐区 */}
+      <section className="featured-section">
+        <h2>🔥 热门推荐</h2>
+        <div className="featured-grid">
+          <div className="featured-item">
+            <span class="emoji">🍚</span>
+            <h3>嘉兴粽子</h3>
+            <p>传统工艺，软糯香甜</p>
           </div>
-          <div className="preview-item">
-            <img src="/bookmark.jpg" alt="乌镇书签" />
-            <span>文创</span>
+          <div className="featured-item">
+            <span class="emoji">🧵</span>
+            <h3>南湖丝绸</h3>
+            <p>轻盈柔滑，质感非凡</p>
           </div>
-          <div className="preview-item">
-            <img src="/zongzi.jpg" alt="嘉兴粽子" />
-            <span>美食</span>
+          <div className="featured-item">
+            <span class="emoji">🍵</span>
+            <h3>乌镇白茶</h3>
+            <p>清香淡雅，回味悠长</p>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* 优势说明区 */}
+      <section className="benefits-section">
+        <div className="benefit-card">
+          <h3>✅ 正品保障</h3>
+          <p>所有商品均来自本地认证商家</p>
+        </div>
+        <div className="benefit-card">
+          <h3>🚚 快速配送</h3>
+          <p>江浙沪次日达，全国包邮</p>
+        </div>
+        <div className="benefit-card">
+          <h3>💬 贴心客服</h3>
+          <p>7x24小时在线，随时为您解答</p>
+        </div>
+      </section>
     </div>
   );
 }
