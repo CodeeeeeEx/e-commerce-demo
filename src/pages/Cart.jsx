@@ -1,12 +1,27 @@
 // src/pages/Cart.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom';  // ✅ 导入导航钩子
 
-function Cart({ cart, removeFromCart, updateQuantity }) {
+function Cart({ cart, removeFromCart, updateQuantity, resetCart }) {  // ✅ 接收 resetCart
+  const navigate = useNavigate();  // ✅ 获取导航函数
+  
   // 计算总价（考虑数量）
   const totalPrice = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
   
   // 计算总件数
   const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+
+  // ✅ 清空购物车函数
+  const clearCart = () => {
+    if (window.confirm('确定要清空购物车吗？')) {
+      // 1. 清空本地存储
+      localStorage.removeItem('ecommerce-cart');
+      // 2. 调用父组件的 resetCart 函数来重置状态
+      if (resetCart) {
+        resetCart();
+      }
+    }
+  };
 
   return (
     <div className="container">
@@ -117,13 +132,7 @@ function Cart({ cart, removeFromCart, updateQuantity }) {
               {cart.length > 0 && (
                 <button 
                   className="btn btn-outline-secondary"
-                  onClick={() => {
-                    if (window.confirm('确定要清空购物车吗？')) {
-                      // 清空购物车
-                      localStorage.removeItem('ecommerce-cart');
-                      window.location.reload(); // 刷新页面重新初始化
-                    }
-                  }}
+                  onClick={clearCart}  // ✅ 使用新的清空函数
                 >
                   <i className="bi bi-trash me-1"></i>
                   清空购物车

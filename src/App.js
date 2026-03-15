@@ -52,6 +52,10 @@ function App() {
     });
   };
 
+  const resetCart = () => {
+    setCart([]);  // 清空购物车状态
+  };
+
   // 调整商品数量函数
   const updateQuantity = (id, newQuantity) => {
     setCart(prevCart => {
@@ -75,7 +79,7 @@ function App() {
   };
 
   return (
-    <Router>
+    <Router basename="/e-commerce-demo">
     {/* ✅ 核心5：路由配置 */}
     {/* 1. 给门口的大招牌 (Header) 挂个牌子，显示现在购物车里有几个东西 */}
       <Header cartCount={cart.length} />
@@ -99,6 +103,7 @@ function App() {
                 cart={cart}
                 removeFromCart={removeFromCart}
                 updateQuantity={updateQuantity}
+                resetCart={resetCart} // 传递 resetCart
               />
             }
           />

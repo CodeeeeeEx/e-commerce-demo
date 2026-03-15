@@ -1,70 +1,122 @@
-# Getting Started with Create React App
+# 🛍️ 嘉兴电商Demo - React项目
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+一个完整的电商前端项目，展示React核心功能 + Bootstrap响应式设计。
 
-## Available Scripts
+## ✨ 功能特性
 
-In the project directory, you can run:
+- ✅ 响应式商品列表展示
+- ✅ 购物车功能
+- ✅ 商品数量调整（+/- 按钮）
+- ✅ 本地存储（刷新页面不丢失）
+- ✅ 烟雨江南主题设计
+- ✅ 响应式导航菜单（手机端汉堡菜单）
+- ✅ 模拟结算流程
 
-### `npm start`
+## 🖥️ 技术栈
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **前端框架**: React 18
+- **状态管理**: React Hooks (useState, useEffect)
+- **UI库**: Bootstrap 5
+- **路由**: React Router DOM
+- **数据持久化**: LocalStorage API
+- **图标**: Bootstrap Icons
+- **部署**: GitHub Pages
+- **版本控制**: Git
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🚀 在线演示
 
-### `npm test`
+👉 [点击体验电商Demo](https://codeeeeeex.github.io/e-commerce-demo)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📸 截图预览
 
-### `npm run build`
+| 首页                                | 商品页                                    | 购物车                                |
+| ----------------------------------- | ----------------------------------------- | ------------------------------------- |
+| ![首页截图](./screenshots/home.png) | ![商品页截图](./screenshots/products.png) | ![购物车截图](./screenshots/cart.png) |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📁 项目结构
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+e-commerce-demo/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+│   ├── images
+├── screenshots
+├── src/
+│   ├── components/         # 可复用组件
+│   │   ├── Header.jsx     # 导航栏
+│   │   └── ProductCard.jsx # 商品卡片
+│   ├── data/              # 数据
+│   │   └── products.js    # 商品数据
+│   ├── pages/             # 页面组件
+│   │   ├── Home.jsx      # 首页
+│   │   └── Home.css      # 首页样式
+│   │   ├── Products.jsx  # 商品列表页
+│   │   └── Cart.jsx      # 购物车页
+│   ├── App.js            # 主组件
+│   ├── App.css           # 全局样式
+│   └── index.js          # 入口文件
+├── README.md             # 项目说明
+└── package.json          # 项目配置
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🔧 本地运行
 
-### `npm run eject`
+```bash
+# 1. 克隆项目
+git clone https://github.com/codeeeeeex/e-commerce-demo.git
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# 2. 进入目录
+cd e-commerce-demo
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# 3. 安装依赖
+npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# 4. 启动开发服务器
+npm start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🎯 核心功能实现
 
-## Learn More
+### 购物车数量调整
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```jsx
+// 用 useState 管理购物车状态
+const [cart, setCart] = useState(() => {
+  const saved = localStorage.getItem("cart");
+  return saved ? JSON.parse(saved) : [];
+});
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+// 商品数量调整
+const updateQuantity = (id, newQuantity) => {
+  setCart((prevCart) => {
+    if (newQuantity <= 0) {
+      return prevCart.filter((item) => item.id !== id);
+    }
+    return prevCart.map((item) =>
+      item.id === id ? { ...item, quantity: newQuantity } : item,
+    );
+  });
+};
+```
 
-### Code Splitting
+### 响应式导航菜单
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```jsx
+// 用 React 状态控制菜单展开/收起
+const [isMenuOpen, setIsMenuOpen] = useState(false);
+const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-### Analyzing the Bundle Size
+// 动态类名控制显示
+<div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`}>
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 📈 学习收获
 
-### Making a Progressive Web App
+通过本项目，我深入掌握了：
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- React组件化开发思想
+- 状态管理和数据流控制
+- 响应式布局设计
+- 前端工程化部署流程
+- 从原型到上线的完整项目流程
