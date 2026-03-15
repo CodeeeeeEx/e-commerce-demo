@@ -32,15 +32,39 @@ function App() {
   // ✅ 核心3：添加商品
   const addToCart = (product) => { 
     setCart(prevCart => { // prevCart 就是“上一秒的账本”
-      const exists = prevCart.find(item => item.id === product.id); // 先翻翻账本，看这东西是不是已经有了
-      if (exists) {
-        alert(`${product.name}已在购物车中`); // 有了就弹窗提醒
-        return prevCart; // 既然有了，账本就不用改，原样返回
+      const existingItemIndex = prevCart.findIndex(item => item.id === product.id); // 先翻翻账本，看这东西是不是已经有了
+      
+      if (existingItemIndex !== -1) {
+        // 已存在：数量+1
+        const updatedCart = [...prevCart];
+        updatedCart[existingItemIndex] = {
+          ...updatedCart[existingItemIndex],
+          quantity: (updatedCart[existingItemIndex].quantity || 1) +1
+        };
+        return updatedCart;
+      } else {
+        // 不存在：添加新商品，数量为1
+        return [...prevCart, {
+          ...product,
+          quantity: 1
+        }];
+      }
+    });
+  };
+
+  // 调整商品数量函数
+  const updateQuantity = (id, newQuantity) => {
+    setCart(prevCart => {
+      if (newQuantity <= 0) {
+        // 数量为0或负数，移除商品
+        return prevCart.filter(item => item.id !== id);
       }
 
-      // 如果没有，就在旧账本后面“追加”这一条，生成一个新账本
-      return [...prevCart, product];
-      //注意：React 规定，不能直接涂改旧账本（比如不能用 push），必须抄一本新的。因为 React 只有看到“本子换了”（内存地址变了），它才知道该更新界面。
+      return prevCart.map(item =>
+        item.id === id
+        ? { ...item, quantity: newQuantity }
+        : item
+      );
     });
   };
 
@@ -74,6 +98,7 @@ function App() {
               <Cart 
                 cart={cart}
                 removeFromCart={removeFromCart}
+                updateQuantity={updateQuantity}
               />
             }
           />

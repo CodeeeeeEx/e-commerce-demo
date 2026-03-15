@@ -10,7 +10,7 @@ function Home() {
         <h1>欢迎来到嘉兴电商</h1>
         <p>精选江南好物，品味嘉兴文化</p>
         <Link to="/products" className="btn-shop">
-          查看热门商品 →
+          点击进入 →
         </Link>
       </section>
 
